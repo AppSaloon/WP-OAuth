@@ -1,9 +1,7 @@
 <?php
 
 // start the user session for maintaining individual user states during the multi-stage authentication flow:
-if (!isset($_SESSION)) {
-    session_start();
-}
+session_start();
 
 # DEFINE THE OAUTH PROVIDER AND SETTINGS TO USE #
 $_SESSION['WPOA']['PROVIDER'] = 'Facebook';
@@ -106,11 +104,11 @@ function get_oauth_token($wpoa) {
 		case 'stream-context':
 			$url = rtrim(URL_TOKEN, "?");
 			$opts = array('http' =>
-				array(
-					'method'  => 'POST',
-					'header'  => 'Content-type: application/x-www-form-urlencoded',
-					'content' => $url_params,
-				)
+				              array(
+					              'method'  => 'POST',
+					              'header'  => 'Content-type: application/x-www-form-urlencoded',
+					              'content' => $url_params,
+				              )
 			);
 			$context = $context  = stream_context_create($opts);
 			$result = @file_get_contents($url, false, $context);
@@ -120,9 +118,9 @@ function get_oauth_token($wpoa) {
 			break;
 	}
 	// parse the result:
-	parse_str($result, $result_obj); // PROVIDER SPECIFIC: Facebook encodes the access token result as a querystring by default
+	$result_obj = json_decode($result, true); // PROVIDER SPECIFIC: Facebook encodes the access token result as a json string by default
 	$access_token = $result_obj['access_token']; // PROVIDER SPECIFIC: this is how Facebook returns the access token KEEP THIS PROTECTED!
-	$expires_in = $result_obj['expires']; // PROVIDER SPECIFIC: this is how Facebook returns the access token's expiration
+	$expires_in = $result_obj['expires_in']; // PROVIDER SPECIFIC: this is how Facebook returns the access token's expiration
 	$expires_at = time() + $expires_in;
 	// handle the result:
 	if (!$access_token || !$expires_in) {
@@ -142,6 +140,7 @@ function get_oauth_identity($wpoa) {
 	// set the access token param:
 	$params = array(
 		'access_token' => $_SESSION['WPOA']['ACCESS_TOKEN'], // PROVIDER SPECIFIC: the access token is passed to Facebook using this key name
+		'fields'    =>  'id,name,email,first_name,last_name'
 	);
 	$url_params = http_build_query($params);
 	// perform the http request:
@@ -160,11 +159,11 @@ function get_oauth_identity($wpoa) {
 		case 'stream-context':
 			$url = rtrim(URL_USER, "?");
 			$opts = array('http' =>
-				array(
-					'method'  => 'GET',
-					// PROVIDER NORMALIZATION: Reddit/Github User-Agent
-					'header'  => "Authorization: Bearer " . $_SESSION['WPOA']['ACCESS_TOKEN'] . "\r\n" . "x-li-format: json\r\n", // PROVIDER SPECIFIC: i think only LinkedIn uses x-li-format...
-				)
+				              array(
+					              'method'  => 'GET',
+					              // PROVIDER NORMALIZATION: Reddit/Github User-Agent
+					              'header'  => "Authorization: Bearer " . $_SESSION['WPOA']['ACCESS_TOKEN'] . "\r\n" . "x-li-format: json\r\n", // PROVIDER SPECIFIC: i think only LinkedIn uses x-li-format...
+				              )
 			);
 			$context = $context  = stream_context_create($opts);
 			$result = @file_get_contents($url, false, $context);
@@ -174,11 +173,14 @@ function get_oauth_identity($wpoa) {
 			$result_obj = json_decode($result, true);
 			break;
 	}
+
 	// parse and return the user's oauth identity:
 	$oauth_identity = array();
 	$oauth_identity['provider'] = $_SESSION['WPOA']['PROVIDER'];
 	$oauth_identity['id'] = $result_obj['id']; // PROVIDER SPECIFIC: this is how Facebook returns the user's unique id
-	//$oauth_identity['email'] = $result_obj['email']; //PROVIDER SPECIFIC: this is how Facebook returns the email address
+	$oauth_identity['email'] = $result_obj['email']; //PROVIDER SPECIFIC: this is how Facebook returns the email address
+	$oauth_identity['firstname'] = $result_obj['first_name'];
+	$oauth_identity['lastname'] = $result_obj['last_name'];
 	if (!$oauth_identity['id']) {
 		$wpoa->wpoa_end_login("Sorry, we couldn't log you in. User identity was not found. Please notify the admin or try again later.");
 	}

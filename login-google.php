@@ -1,9 +1,7 @@
 <?php
 
 // start the user session for maintaining individual user states during the multi-stage authentication flow:
-if (!isset($_SESSION)) {
-    session_start();
-}
+session_start();
 
 # DEFINE THE OAUTH PROVIDER AND SETTINGS TO USE #
 $_SESSION['WPOA']['PROVIDER'] = 'Google';
@@ -12,9 +10,9 @@ define('CLIENT_ENABLED', get_option('wpoa_google_api_enabled'));
 define('CLIENT_ID', get_option('wpoa_google_api_id'));
 define('CLIENT_SECRET', get_option('wpoa_google_api_secret'));
 define('REDIRECT_URI', rtrim(site_url(), '/') . '/');
-define('SCOPE', 'profile'); // PROVIDER SPECIFIC: 'profile' is the minimum scope required to get the user's id from Google
+define('SCOPE', 'email'); // PROVIDER SPECIFIC: 'profile' is the minimum scope required to get the user's id from Google
 define('URL_AUTH', "https://accounts.google.com/o/oauth2/auth?");
-define('URL_TOKEN', "https://accounts.google.com/o/oauth2/token?");
+define('URL_TOKEN', "https://accounts.google.com/o/oauth2/token");
 define('URL_USER', "https://www.googleapis.com/plus/v1/people/me?");
 # END OF DEFINE THE OAUTH PROVIDER AND SETTINGS TO USE #
 
@@ -98,9 +96,11 @@ function get_oauth_token($wpoa) {
 		'redirect_uri' => REDIRECT_URI,
 	);
 	$url_params = http_build_query($params);
+
 	switch (strtolower(HTTP_UTIL)) {
 		case 'curl':
-			$url = URL_TOKEN . $url_params;
+			$url = URL_TOKEN;
+
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -115,11 +115,11 @@ function get_oauth_token($wpoa) {
 		case 'stream-context':
 			$url = rtrim(URL_TOKEN, "?");
 			$opts = array('http' =>
-				array(
-					'method'  => 'POST',
-					'header'  => 'Content-type: application/x-www-form-urlencoded',
-					'content' => $url_params,
-				)
+				              array(
+					              'method'  => 'POST',
+					              'header'  => 'Content-type: application/x-www-form-urlencoded',
+					              'content' => $url_params,
+				              )
 			);
 			$context = $context  = stream_context_create($opts);
 			$result = @file_get_contents($url, false, $context);
@@ -134,6 +134,7 @@ function get_oauth_token($wpoa) {
 	$expires_in = $result_obj['expires_in']; // PROVIDER SPECIFIC: this is how Google returns the access token's expiration
 	$expires_at = time() + $expires_in;
 	// handle the result:
+
 	if (!$access_token || !$expires_in) {
 		// malformed access token result detected:
 		$wpoa->wpoa_end_login("Sorry, we couldn't log you in. Malformed access token result detected. Please notify the admin or try again later.");
@@ -168,11 +169,11 @@ function get_oauth_identity($wpoa) {
 		case 'stream-context':
 			$url = rtrim(URL_USER, "?");
 			$opts = array('http' =>
-				array(
-					'method'  => 'GET',
-					// PROVIDER NORMALIZATION: Reddit/Github requires User-Agent here...
-					'header'  => "Authorization: Bearer " . $_SESSION['WPOA']['ACCESS_TOKEN'] . "\r\n" . "x-li-format: json\r\n", // PROVIDER SPECIFIC: i think only LinkedIn uses x-li-format...
-				)
+				              array(
+					              'method'  => 'GET',
+					              // PROVIDER NORMALIZATION: Reddit/Github requires User-Agent here...
+					              'header'  => "Authorization: Bearer " . $_SESSION['WPOA']['ACCESS_TOKEN'] . "\r\n" . "x-li-format: json\r\n", // PROVIDER SPECIFIC: i think only LinkedIn uses x-li-format...
+				              )
 			);
 			$context = $context  = stream_context_create($opts);
 			$result = @file_get_contents($url, false, $context);
@@ -182,11 +183,12 @@ function get_oauth_identity($wpoa) {
 			$result_obj = json_decode($result, true);
 			break;
 	}
+
 	// parse and return the user's oauth identity:
 	$oauth_identity = array();
 	$oauth_identity['provider'] = $_SESSION['WPOA']['PROVIDER'];
 	$oauth_identity['id'] = $result_obj['id']; // PROVIDER SPECIFIC: Google returns the user's OAuth identity as id
-	//$oauth_identity['email'] = $result_obj['emails'][0]['value']; // PROVIDER SPECIFIC: Google returns an array of email addresses. To respect privacy we currently don't collect the user's email address.
+	$oauth_identity['email'] = $result_obj['emails'][0]['value']; // PROVIDER SPECIFIC: Google returns an array of email addresses. To respect privacy we currently don't collect the user's email address.
 	if (!$oauth_identity['id']) {
 		$wpoa->wpoa_end_login("Sorry, we couldn't log you in. User identity was not found. Please notify the admin or try again later.");
 	}
