@@ -1,8 +1,6 @@
 WP-OAuth
 ========
 
-***NEWS MAY 2015: I'd like to apologize to the contributors here for being unable to accept pull requests in a timely manner. I did not expect to be receiving so many so early on :) Just wanted to let everyone know that this project hasn't been abandoned, I'm still here and will be addressing pull requests + issues in due time. Thanks for understanding.***
-
 ![logo](http://files.glassocean.net/github/wp-oauth-logo.png)
 
 A WordPress plugin that allows users to login or register by authenticating with an existing Google, Facebook, LinkedIn, Github, Reddit or Windows Live account via OAuth 2.0. Easily drops into new or existing sites, integrates with existing users.
@@ -40,4 +38,4 @@ Roadmap
 
 History
 -------
-This project is a continuation of [WP-OpenLogin](http://github.com/perrybutler/wp-openlogin) which was originally developed with OpenID in mind. We're moving on; OAuth 2.0 is now the standard.
+This project is a continuation of [WP-OAuth](https://github.com/perrybutler/WP-OAuth).
