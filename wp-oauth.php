@@ -2,12 +2,14 @@
 
 /*
 Plugin Name: WP-OAuth
-Plugin URI: http://github.com/perrybutler/wp-oauth
+Plugin URI: https://github.com/AppSaloon/WP-OAuth
 Description: A WordPress plugin that allows users to login or register by authenticating with an existing Google, Facebook, LinkedIn, Github, Reddit or Windows Live account via OAuth 2.0. Easily drops into new or existing sites, integrates with existing users.
-Version: 0.4.1
-Author: Perry Butler
-Author URI: http://glassocean.net
+Version: 0.5.0
+Author: Aytaç Kokus / Perry Butler
+Author URI: https://www.appsaloon.be
 License: GPL2
+
+This plugin is continuation of Perry Butler's WP-OAuth plugin
 */
 
 // start the user session for persisting user/login state during ajax, header redirect, and cross domain calls:
@@ -21,7 +23,7 @@ Class WPOA {
 	// ==============
 
 	// set a version that we can use for performing plugin updates, this should always match the plugin version:
-	const PLUGIN_VERSION = "0.4.1";
+	const PLUGIN_VERSION = "0.5.0";
 
 	// singleton class pattern:
 	protected static $instance = null;
