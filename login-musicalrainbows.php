@@ -15,9 +15,9 @@ define('CLIENT_ID', get_option('wpoa_musicalrainbows_api_id'));
 define('CLIENT_SECRET', get_option('wpoa_musicalrainbows_api_secret'));
 define('REDIRECT_URI', rtrim(site_url(), '/') . '/');
 define('SCOPE', 'basic');
-define('URL_AUTH', "http://local.musicalrainbow.be/oauth/authorize");
-define('URL_TOKEN', "http://local.musicalrainbow.be/oauth/token?");
-define('URL_USER', "http://local.musicalrainbow.be/oauth/me");
+define('URL_AUTH', "https://musicalrainbows.be/oauth/authorize");
+define('URL_TOKEN', "https://musicalrainbows.be/oauth/token?");
+define('URL_USER', "https://musicalrainbows.be/oauth/me");
 # END OF DEFINE THE OAUTH PROVIDER AND SETTINGS TO USE #
 
 $client = new OAuth2\Client(CLIENT_ID, CLIENT_SECRET);
