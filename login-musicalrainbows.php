@@ -42,8 +42,11 @@ else
 	 * Get user credentials
 	 */
 	$url = URL_USER . '?access_token='.$response['result']['access_token'];
-	$output = wp_remote_get( $url );
+	$output = wp_remote_get( $url, array( 'timeout' => 30 ) );
 
+	/**
+	 * If login is successful
+	 */
 	if( ! is_wp_error( $output ) && $output['response']['code'] === 200 ) {
 		$user = json_decode($output['body']);
 
