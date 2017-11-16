@@ -4,8 +4,8 @@
 Plugin Name: WP-OAuth
 Plugin URI: https://github.com/AppSaloon/WP-OAuth
 Description: A WordPress plugin that allows users to login or register by authenticating with an existing Google, Facebook, LinkedIn, Github, Reddit or Windows Live account via OAuth 2.0. Easily drops into new or existing sites, integrates with existing users.
-Version: 0.6.2
-Author: Aytaç Kokus / Perry Butler
+Version: 0.6.3
+Author: Aytaç Kokus / Mark Creeten / Perry Butler
 Author URI: https://www.appsaloon.be
 License: GPL2
 
@@ -75,7 +75,7 @@ Class WPOA {
 				'show_logout'       => 'conditional',
 				'button_prefix'     => 'Login with',
 				'logged_out_title'  => 'Please login:',
-				'logged_in_title'   => 'You are already logged in.',
+				'logged_in_title'   => 'You are already logged in6.',
 				'logging_in_title'  => 'Logging in...',
 				'logging_out_title' => 'Logging out...',
 				'style'             => '',
@@ -87,7 +87,7 @@ Class WPOA {
 				'align'             => 'left',
 				'show_login'        => 'always',
 				'show_logout'       => 'never',
-				'button_prefix'     => 'Link',
+				'button_prefix'     => 'Link', 
 				'logged_out_title'  => 'Select a provider:',
 				'logged_in_title'   => 'Select a provider:',
 				'logging_in_title'  => 'Authenticating...',
@@ -669,9 +669,10 @@ Class WPOA {
 		if ( $design != "None" ) {
 			// TODO: we need to use $settings defaults here, not hard-coded defaults...
 			$html .= $this->wpoa_login_form_content( $design, 'none', 'buttons-column', 'Connect with', 'center',
-				'conditional', 'conditional', 'Please login:', 'You are already logged in.', 'Logging in...',
+				'conditional', 'conditional', 'Please login:', 'You are already logged in1.', 'Logging in...',
 				'Logging out...' );
 		}
+
 		echo $html;
 	}
 
@@ -686,7 +687,7 @@ Class WPOA {
 		if ( $design != "None" ) {
 			// TODO: we need to use $settings defaults here, not hard-coded defaults...
 			$html .= $this->wpoa_login_form_content( $design, 'none', 'buttons-column', 'Connect with', 'center',
-				'conditional', 'conditional', 'Please login:', 'You are already logged in.', 'Logging in...',
+				'conditional', 'conditional', 'Please login:', 'You are already logged in2.', 'Logging in...',
 				'Logging out...' );
 			$fields['logged_in_as'] = $html;
 		}
@@ -701,7 +702,7 @@ Class WPOA {
 		if ( $design != "None" ) {
 			// TODO: we need to use $settings defaults here, not hard-coded defaults...
 			$html .= $this->wpoa_login_form_content( $design, 'none', 'buttons-column', 'Connect with', 'center',
-				'conditional', 'conditional', 'Please login:', 'You are already logged in.', 'Logging in...',
+				'conditional', 'conditional', 'Please login:', 'You are already logged in3.', 'Logging in...',
 				'Logging out...' );
 		}
 		echo $html;
@@ -722,7 +723,7 @@ Class WPOA {
 			'show_login'        => 'conditional',
 			'show_logout'       => 'conditional',
 			'logged_out_title'  => 'Please login:',
-			'logged_in_title'   => 'You are already logged in.',
+			'logged_in_title'   => 'You are already logged in4.',
 			'logging_in_title'  => 'Logging in...',
 			'logging_out_title' => 'Logging out...',
 			'style'             => '',
@@ -749,7 +750,7 @@ Class WPOA {
 		$show_login = 'conditional',
 		$show_logout = 'conditional',
 		$logged_out_title = 'Please login:',
-		$logged_in_title = 'You are already logged in.',
+		$logged_in_title = 'You are already logged in5.',
 		$logging_in_title = 'Logging in...',
 		$logging_out_title = 'Logging out...',
 		$style = '',
@@ -771,29 +772,30 @@ Class WPOA {
 			$style             = $a['style'];
 			$class             = $a['class'];
 		}
+
 		// build the shortcode markup:
 		$html = "";
-		$html .= "<div class='wpoa-login-form wpoa-layout-$layout wpoa-layout-align-$align $class' style='$style' data-logging-in-title='$logging_in_title' data-logging-out-title='$logging_out_title'>";
+		$html .= '<div class="wpoa-login-form wpoa-layout-'.$layout.' wpoa-layout-align-'.$align.' '.$class.'" style="'.$style.'" data-logging-in-title="'.__( 'Logging in...', 'muha' ).'" data-logging-out-title="'.__( 'Logging out...', 'muha' ).'">';
 		$html .= "<nav>";
 		if ( is_user_logged_in() ) {
 			if ( $logged_in_title ) {
-				$html .= "<p id='wpoa-title'>" . $logged_in_title . "</p>";
+				$html .= "<p id='wpoa-title'>" . __( 'You are already logged in', 'muha' ) . "</p>";
 			}
 			if ( $show_login == 'always' ) {
 				$html .= $this->wpoa_login_buttons( $icon_set, $button_prefix );
 			}
 			if ( $show_logout == 'always' || $show_logout == 'conditional' ) {
-				$html .= "<a class='wpoa-logout-button' href='" . wp_logout_url() . "' title='Logout'>Logout</a>";
+				$html .= "<a class='wpoa-logout-button' href='" . wp_logout_url() . "' title='Logout'>". __( 'Logout', 'muha' ) ."</a>";
 			}
 		} else {
 			if ( $logged_out_title ) {
-				$html .= "<p id='wpoa-title'>" . $logged_out_title . "</p>";
+				$html .= "<p id='wpoa-title'>" . __( 'Please login:', 'muha' ) . "</p>";
 			}
 			if ( $show_login == 'always' || $show_login == 'conditional' ) {
 				$html .= $this->wpoa_login_buttons( $icon_set, $button_prefix );
 			}
 			if ( $show_logout == 'always' ) {
-				$html .= "<a class='wpoa-logout-button' href='" . wp_logout_url() . "' title='Logout'>Logout</a>";
+				$html .= "<a class='wpoa-logout-button' href='" . wp_logout_url() . "' title='Logout'>". __( 'Logout', 'muha' ) ."</a>";
 			}
 		}
 		$html .= "</nav>";
@@ -931,14 +933,14 @@ Class WPOA {
 		$query_result   = $wpdb->get_results( $query_string );
 		// list the wpoa_identity records:
 		echo "<div id='wpoa-linked-accounts'>";
-		echo "<h3>Linked Accounts</h3>";
-		echo "<p>Manage the linked accounts which you have previously authorized to be used for logging into this website.</p>";
+		echo '<h3>'. __( 'Linked Accounts', 'muha' ) .'</h3>';
+		echo '<p>'. __( 'Manage the linked accounts which you have previously authorized to be used for logging into this website', 'muha' ) .'.</p>';
 		echo "<table class='form-table'>";
 		echo "<tr valign='top'>";
-		echo "<th scope='row'>Your Linked Providers</th>";
+		echo '<th scope="row">'. __( 'Your Linked Providers', 'muha' ) .'</th>';
 		echo "<td>";
 		if ( count( $query_result ) == 0 ) {
-			echo "<p>You currently don't have any accounts linked.</p>";
+			echo '<p>'. __( 'You currently don\'t have any accounts linked', 'muha' ) .'.</p>';
 		}
 		echo "<div class='wpoa-linked-accounts'>";
 		foreach ( $query_result as $wpoa_row ) {
@@ -948,19 +950,19 @@ Class WPOA {
 			$time_linked         = $wpoa_identity_parts[2];
 			$local_time          = strtotime( "-" . $_COOKIE['gmtoffset'] . ' hours', $time_linked );
 			echo "<div>" . $oauth_provider . " on " . date( 'F d, Y h:i A',
-					$local_time ) . " <a class='wpoa-unlink-account' data-wpoa-identity-row='" . $wpoa_row->umeta_id . "' href='#'>Unlink</a></div>";
+					$local_time ) . " <a class='wpoa-unlink-account' data-wpoa-identity-row='" . $wpoa_row->umeta_id . "' href='#'>". __( 'Unlink', 'muha' ) ."</a></div>";
 		}
 		echo "</div>";
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr valign='top'>";
-		echo "<th scope='row'>Link Another Provider</th>";
+		echo '<th scope="row">'. __( 'Link Another Provider', 'muha' ) .'</th>';
 		echo "<td>";
 		$design = get_option( 'wpoa_login_form_show_profile_page' );
 		if ( $design != "None" ) {
 			// TODO: we need to use $settings defaults here, not hard-coded defaults...
 			echo $this->wpoa_login_form_content( $design, 'none', 'buttons-row', 'Link', 'left', 'always', 'never',
-				'Select a provider:', 'Select a provider:', 'Authenticating...', '' );
+				__( 'Select a provider:', 'muha' ), __( 'Select a provider:', 'muha' ), __( 'Authenticating...', 'muha' ), '' );
 		}
 		echo "</div>";
 		echo "</td>";
