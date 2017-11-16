@@ -4,7 +4,7 @@
 Plugin Name: WP-OAuth
 Plugin URI: https://github.com/AppSaloon/WP-OAuth
 Description: A WordPress plugin that allows users to login or register by authenticating with an existing Google, Facebook, LinkedIn, Github, Reddit or Windows Live account via OAuth 2.0. Easily drops into new or existing sites, integrates with existing users.
-Version: 0.6.3
+Version: 0.6.4
 Author: Aytaç Kokus / Mark Creeten / Perry Butler
 Author URI: https://www.appsaloon.be
 License: GPL2

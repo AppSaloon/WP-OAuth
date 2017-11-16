@@ -54,7 +54,6 @@ $cc_ux = wpoa_cc_ux();
 
 
 <div class='wrap wpoa-settings'>
-	<div id="wpoa-settings-meta">Toggle tips: <ul><li><a id="wpoa-settings-tips-on" href="#">On</a></li><li><a id="wpoa-settings-tips-off" href="#">Off</a></li></ul><div class="nav-splitter"></div>Toggle sections: <ul><li><a id="wpoa-settings-sections-on" href="#">On</a></li><li><a id="wpoa-settings-sections-off" href="#">Off</a></li></ul></div>
 	<h2>WP-OAuth Settings</h2>
 	<!-- START Settings Header -->
 	<div id="wpoa-settings-header"></div>
@@ -63,6 +62,7 @@ $cc_ux = wpoa_cc_ux();
 	<div id="wpoa-settings-body">
 		<!-- START Settings Column 2 -->
 		<div id="wpoa-settings-col2" class="wpoa-settings-column">
+			<div id="wpoa-settings-meta">Toggle tips: <ul><li><a id="wpoa-settings-tips-on" href="#">On</a></li><li><a id="wpoa-settings-tips-off" href="#">Off</a></li></ul><div class="nav-splitter"></div>Toggle sections: <ul><li><a id="wpoa-settings-sections-on" href="#">On</a></li><li><a id="wpoa-settings-sections-off" href="#">Off</a></li></ul></div>
 			<div id="wpoa-settings-section-about" class="wpoa-settings-section">
 				<h3>About</h3>
 				<div class='form-padding'>
