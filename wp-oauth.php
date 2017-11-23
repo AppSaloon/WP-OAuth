@@ -4,7 +4,7 @@
 Plugin Name: WP-OAuth
 Plugin URI: https://github.com/AppSaloon/WP-OAuth
 Description: A WordPress plugin that allows users to login or register by authenticating with an existing Google, Facebook, LinkedIn, Github, Reddit or Windows Live account via OAuth 2.0. Easily drops into new or existing sites, integrates with existing users.
-Version: 0.6.4
+Version: 0.6.5
 Author: Aytaç Kokus / Mark Creeten / Perry Butler
 Author URI: https://www.appsaloon.be
 License: GPL2
@@ -23,7 +23,7 @@ Class WPOA {
 	// ==============
 
 	// set a version that we can use for performing plugin updates, this should always match the plugin version:
-	const PLUGIN_VERSION = "0.5.0";
+	const PLUGIN_VERSION = "0.6.5";
 
 	// singleton class pattern:
 	protected static $instance = null;
@@ -73,7 +73,7 @@ Class WPOA {
 				'align'             => 'center',
 				'show_login'        => 'conditional',
 				'show_logout'       => 'conditional',
-				'button_prefix'     => 'Login with',
+				'button_prefix'     => 'Login with5',
 				'logged_out_title'  => 'Please login:',
 				'logged_in_title'   => 'You are already logged in6.',
 				'logging_in_title'  => 'Logging in...',
@@ -825,7 +825,7 @@ Class WPOA {
 		// TODO: don't hard-code the buttons/providers here, we want to be able to add more providers without having to update this function...
 		$html = "";
 		$html .= $this->wpoa_login_button( "google", "Google", $atts );
-		$html .= $this->wpoa_login_button( "musicalrainbows", "Musicalrainbows", $atts );
+		$html .= $this->wpoa_login_button( "musicalrainbows", "Musical Rainbows", $atts );
 		$html .= $this->wpoa_login_button( "facebook", "Facebook", $atts );
 		$html .= $this->wpoa_login_button( "linkedin", "LinkedIn", $atts );
 		$html .= $this->wpoa_login_button( "github", "GitHub", $atts );
@@ -833,7 +833,7 @@ Class WPOA {
 		$html .= $this->wpoa_login_button( "windowslive", "Windows Live", $atts );
 		$html .= $this->wpoa_login_button( "paypal", "PayPal", $atts );
 		$html .= $this->wpoa_login_button( "instagram", "Instagram", $atts );
-		$html .= $this->wpoa_login_button( "battlenet", "Battlenet", $atts );
+		//$html .= $this->wpoa_login_button( "battlenet", "Battlenet", $atts );
 		if ( $html == '' ) {
 			$html .= 'Sorry, no login providers have been enabled.';
 		}
@@ -847,9 +847,9 @@ Class WPOA {
 		if ( get_option( "wpoa_" . $provider . "_api_enabled" ) ) {
 			$html .= "<a id='wpoa-login-" . $provider . "' class='wpoa-login-button' href='" . $atts['site_url'] . "?connect=" . $provider . $atts['redirect_to'] . "'>";
 			if ( $atts['icon_set'] != 'none' ) {
-				$html .= "<img src='" . $atts['icon_set_path'] . $provider . ".png' alt='" . $display_name . "' class='icon'></img>";
+				$html .= "<img src='" . $atts['icon_set_path'] . $provider . ".png' alt='" . $display_name . "' class='icon'>";
 			}
-			$html .= $atts['button_prefix'] . " " . $display_name;
+			$html .= sprintf( __( 'Login met mijn %s -account', 'muha' ), $display_name );
 			$html .= "</a>";
 		}
 

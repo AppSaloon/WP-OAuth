@@ -68,37 +68,37 @@ $cc_ux = wpoa_cc_ux();
 				<div class='form-padding'>
 					<div id="wpoa-logo" style="width:64px; height:64px; float:right; background-size:100% 100%;"></div>
 					<p><span style="font-size:1.1em;"><strong>WP-OAuth <?php echo WPOA::PLUGIN_VERSION; ?></strong></span><br/>by <a href="http://glassocean.net" target="_blank"><strong>Perry Butler</strong></a></p>
-					<p>Rate it 5 stars: <a id="wpoa-rate-5stars" href="https://wordpress.org/support/view/plugin-reviews/wp-oauth?rate=5" target="_blank"><img src="http://ps.w.org/wp-oauth/assets/5stars.png" style="vertical-align:text-top;" /></a></p>
-					<nav><ul><li><a href="https://wordpress.org/plugins/wp-oauth/" target="_blank">WP-OAuth at WordPress.org</a></li><li><a href="https://github.com/perrybutler/WP-OAuth" target="_blank">WP-OAuth at GitHub.com</a></li><li><a href="http://glassocean.net/wp-oauth-enhances-your-wordpress-login-and-registration/" target="_blank">WP-OAuth at GlassOcean.net</a></li></ul></nav>
+					<!-- <p>Rate it 5 stars: <a id="wpoa-rate-5stars" href="https://wordpress.org/support/view/plugin-reviews/wp-oauth?rate=5" target="_blank"><img src="http://ps.w.org/wp-oauth/assets/5stars.png" style="vertical-align:text-top;" /></a></p> -->
+					<nav><ul><li><a href="https://wordpress.org/plugins/wp-oauth/" target="_blank">WP-OAuth at WordPress.org</a></li><li><a href="https://github.com/perrybutler/WP-OAuth" target="_blank">WP-OAuth at GitHub.com</a></li><!-- <li><a href="http://glassocean.net/wp-oauth-enhances-your-wordpress-login-and-registration/" target="_blank">WP-OAuth at GlassOcean.net</a></li> --></ul></nav>
 				</div>
 			</div>
-			<div id="wpoa-settings-section-news" class="wpoa-settings-section">
+			<!-- <div id="wpoa-settings-section-news" class="wpoa-settings-section">
 				<h3>News</h3>
 				<div class='form-padding'>
 					<?php
-					$rss = fetch_feed("http://glassocean.net/tag/wp-oauth/feed/");
-					if (!is_wp_error($rss)) {
-						$maxitems = $rss->get_item_quantity(5);
-						$rss_items = $rss->get_items(0, $maxitems);
-					}
+					// $rss = fetch_feed("http://glassocean.net/tag/wp-oauth/feed/");
+					// if (!is_wp_error($rss)) {
+					// 	$maxitems = $rss->get_item_quantity(5);
+					// 	$rss_items = $rss->get_items(0, $maxitems);
+					// }
 					?>
-					<?php if ($maxitems == 0) : ?>
-						<p><?php _e("Sorry, news was inaccessible or does not exist.", 'my-text-domain' ); ?></p>
-					<?php else : ?>
+					<?php //if ($maxitems == 0) : ?>
+						<p><?php //_e("Sorry, news was inaccessible or does not exist.", 'my-text-domain' ); ?></p>
+					<?php //else : ?>
 						<ul>
-							<?php foreach ($rss_items as $item) : ?>
+							<?php //foreach ($rss_items as $item) : ?>
 								<li>
-									<a href="<?php echo esc_url($item->get_permalink()); ?>"
-									   title="<?php printf( __('Posted %s', 'my-text-domain'), $item->get_date('j F Y | g:i a') ); ?>"
+									<a href="<?php //echo esc_url($item->get_permalink()); ?>"
+									   title="<?php //printf( __('Posted %s', 'my-text-domain'), $item->get_date('j F Y | g:i a') ); ?>"
 									   target="_blank">
-										<?php echo esc_html($item->get_title()); ?>
+										<?php //echo esc_html($item->get_title()); ?>
 									</a>
 								</li>
-							<?php endforeach; ?>
+							<?php //endforeach; ?>
 						</ul>
-					<?php endif; ?>
+					<?php //endif; ?>
 				</div>
-			</div>
+			</div> -->
 			<div id="wpoa-settings-section-config-check" class="wpoa-settings-section">
 				<h3>Config Check</h3>
 				<div class='form-padding'>
@@ -133,7 +133,7 @@ $cc_ux = wpoa_cc_ux();
 					</div>
 				</div>
 			</div>
-			<div id="wpoa-settings-section-donate" class="wpoa-settings-section">
+			<!-- <div id="wpoa-settings-section-donate" class="wpoa-settings-section">
 				<h3>Donate</h3>
 				<div class='form-padding'>
 					<div id="wpoa-heart"></div>
@@ -151,13 +151,13 @@ $cc_ux = wpoa_cc_ux();
 						<input type="submit" id="wpoa-paypal-button" class="button" value="Donate">
 					</form>
 				</div>
-			</div>
-			<div id="wpoa-settings-section-support" class="wpoa-settings-section">
+			</div> -->
+			<!-- <div id="wpoa-settings-section-support" class="wpoa-settings-section">
 				<h3 id="bookmark-login-page-form-customization">Support</h3>
 				<div class='form-padding'>
 					<p>Your general questions can be asked in the plugin <a href="https://wordpress.org/support/plugin/wp-oauth" target="_blank">support forum</a>.</p>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<!-- END Settings Column 2 -->
 		<!-- START Settings Column 1 -->
@@ -865,32 +865,31 @@ $cc_ux = wpoa_cc_ux();
 				<!-- END Login with Instagram section -->
 
 				<!-- START Login with Battle.net section -->
-				<div id="wpoa-settings-section-login-with-battlenet" class="wpoa-settings-section">
+				<!-- <div id="wpoa-settings-section-login-with-battlenet" class="wpoa-settings-section">
 					<h3>Login with Battle.net</h3>
 					<div class='form-padding'>
 						<table class='form-table'>
 							<tr valign='top'>
 								<th scope='row'>Enabled:</th>
 								<td>
-									<input type='checkbox' name='wpoa_battlenet_api_enabled' value='1' <?php checked(get_option('wpoa_battlenet_api_enabled') == 1); ?> />
+									<input type='checkbox' name='wpoa_battlenet_api_enabled' value='1' <?php //checked(get_option('wpoa_battlenet_api_enabled') == 1); ?> />
 								</td>
 							</tr>
 
 							<tr valign='top'>
 								<th scope='row'>Key:</th>
 								<td>
-									<input type='text' name='wpoa_battlenet_api_id' value='<?php echo get_option('wpoa_battlenet_api_id'); ?>' />
+									<input type='text' name='wpoa_battlenet_api_id' value='<?php //echo get_option('wpoa_battlenet_api_id'); ?>' />
 								</td>
 							</tr>
 
 							<tr valign='top'>
 								<th scope='row'>Secret:</th>
 								<td>
-									<input type='text' name='wpoa_battlenet_api_secret' value='<?php echo get_option('wpoa_battlenet_api_secret'); ?>' />
+									<input type='text' name='wpoa_battlenet_api_secret' value='<?php //echo get_option('wpoa_battlenet_api_secret'); ?>' />
 								</td>
 							</tr>
-						</table> <!-- .form-table -->
-
+						</table>
 						<p>
 							<strong>Instructions:</strong>
 						<ol>
@@ -898,7 +897,7 @@ $cc_ux = wpoa_cc_ux();
 							<li>Visit the <a href='http://dev.battle.net/' target="_blank">Battle.net API</a> home page and <a href='https://dev.battle.net/member/register' target="_blank">Create a Mashery Account</a>.
 							<li>After creating your account and signing in, visit the <a href='https://dev.battle.net/apps/myapps'>My Applications</a> page.</li>
 							<li><a href="https://dev.battle.net/apps/register">Create a New Application</a> and fill out the details.</li>
-							<li>Provide your site URL (<?php echo site_url('', 'https'); ?>/) for the <em>Register Callback URL</em>. Don't forget the trailing slash!</li>
+							<li>Provide your site URL (<?php //echo site_url('', 'https'); ?>/) for the <em>Register Callback URL</em>. Don't forget the trailing slash!</li>
 							<li>After registering the application, locate the <em>Key/Secret</em> provided by Battle.net and paste them into the fields above, then click the Save all settings button.</li>
 						</ol>
 						<strong>References:</strong>
@@ -908,8 +907,8 @@ $cc_ux = wpoa_cc_ux();
 						</ul>
 						</p>
 						<?php submit_button('Save all settings'); ?>
-					</div> <!-- .form-padding -->
-				</div> <!-- .wpoa-settings-section -->
+					</div>
+				</div> 
 				<!-- END Login with Battle.net section -->
 
 				<!-- START Back Channel Configuration section -->
